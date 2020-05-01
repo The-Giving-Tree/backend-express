@@ -1,7 +1,7 @@
 const cron = require('node-cron');
 
 const Post = require(__dirname + '/../models/post');
-const User = require(__dirname + '/../models/post');
+const User = require(__dirname + '/../models/user');
 
 const expiring = () => {
     const todayHour = moment(new Date()).minutes(0).seconds(0)
@@ -22,10 +22,11 @@ const expiring = () => {
 }
 
 const notify = (user, post) => {
-  console.log(user)
+  // TODO: send email
 }
 
 cron.schedule('0 * * * *', () => {
+  // Every 0 minute (hourly)
 
   expiring().then(posts => {
     console.log(`${posts.length} posts expiring in 24 hours. Will send emails`);
@@ -37,5 +38,3 @@ cron.schedule('0 * * * *', () => {
     })
   })
 })
-
-export { expiring }
