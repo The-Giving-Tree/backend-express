@@ -55,7 +55,7 @@ exports.createComment = async (req, res, next) => {
           sendNotification(assignedUser, author, comment, 'Comment');
         }
 
-        if (postAuthor._id !== author._id) {
+        if (!postAuthor._id.equals(author._id)) {
           // Someone commented on post author's post
           await sendEmail('comment', {
             // TODO: throw in a fallback URL for profilePictureUrl
