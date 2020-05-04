@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { body, validationResult } = require('express-validator/check');
 const Comment = require(__dirname + '/../models/comment');
 const Post = require(__dirname + '/../models/post');
@@ -55,10 +56,22 @@ exports.createComment = async (req, res, next) => {
           sendNotification(assignedUser, author, comment, 'Comment');
         }
 
-        if (postAuthor._id !== author._id) {
+        if (!postAuthor._id.equals(author._id)) {
           // Someone commented on post author's post
+          const authorWithProfilePic = author.toObject();
+          if (
+            !authorWithProfilePic.profilePictureUrl ||
+            authorWithProfilePic.profilePictureUrl.match(/\.svg$/i)
+          ) {
+            const emailHash = crypto
+              .createHash('md5')
+              .update(authorWithProfilePic.email)
+              .digest('hex');
+
+            authorWithProfilePic.profilePictureUrl = `https://www.gravatar.com/avatar/${emailHash}?d=mp`;
+          }
+
           await sendEmail('comment', {
-            // TODO: throw in a fallback URL for profilePictureUrl
             recipient: postAuthor,
             data: {
               comment,
@@ -66,7 +79,7 @@ exports.createComment = async (req, res, next) => {
                 process.env.NODE_ENV === 'PRODUCTION'
                   ? 'https://www.givingtreeproject.org'
                   : 'http://localhost:3001' + '/post/' + post._id,
-              author: author
+              author: authorWithProfilePic
             }
           });
         }
