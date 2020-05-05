@@ -10,7 +10,7 @@ const postModel = new Schema(
     createdAt: { type: Date },
     updatedAt: { type: Date },
     startDate: { type: Date }, // when the request began
-    endDate: { type: Date, default: null }, // when the request finished (null = ongoing)
+    endDate: { type: Date, default: null }, // completed date (null = not completed)
     categories: [{ type: String }],
     draft: { type: Boolean }, // if post is still in review
     published: { type: Boolean }, // if post is publically available
