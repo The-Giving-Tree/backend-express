@@ -8,6 +8,8 @@ const Notification = require(__dirname + '/../models/notification');
 const mongoose = require('mongoose');
 var io = require(__dirname + '/../mysockets');
 const sendNotification = require(__dirname + '/../util/notification');
+const { userWithProfilePic } = require('../util/user-with-profile-pic');
+const { sendEmail } = require('../util/send-email');
 
 function antiSpam(user, author) {
   var diff = new Date() - new Date(user.createdAt);
@@ -499,6 +501,24 @@ exports.createReply = async (req, res, next) => {
         post.save();
 
         let commentAuthor = await User.findOne({ username: comment.username });
+
+        // Send email to parent comment author
+        const authorWithProfilePic = userWithProfilePic(currentUser);
+
+        await sendEmail('reply', {
+          recipient: commentAuthor,
+          data: {
+            comment: commentNew,
+            ctaText: 'Reply Now',
+            ctaLink:
+              (process.env.NODE_ENV === 'PRODUCTION'
+                ? 'https://www.givingtreeproject.org'
+                : 'http://localhost:3001') +
+              '/post/' +
+              postId,
+            author: authorWithProfilePic
+          }
+        });
 
         sendNotification(commentAuthor, currentUser, comment, 'Reply');
 

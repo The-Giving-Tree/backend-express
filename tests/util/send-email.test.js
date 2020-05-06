@@ -65,4 +65,19 @@ describe('Send Email Util', function() {
     expect(msg).to.have.property('subject');
     expect(msg).to.have.property('html');
   });
+
+  it('should not send email if DEBUG_EMAIL env var', async function() {
+    process.env.DEBUG_EMAIL = true;
+
+    await sendEmail('base-email', {
+      recipient: {
+        email: 'test@givingtreeproject.org'
+      },
+      data: {}
+    });
+
+    expect(sendStub).not.to.have.been.called;
+
+    delete process.env.DEBUG_EMAIL;
+  });
 });
