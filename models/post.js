@@ -90,7 +90,8 @@ const postModel = new Schema(
     },
     postal: { type: String },
     phoneNumber: { type: String, select: false },
-    publicAddress: { type: String }
+    publicAddress: { type: String },
+    emailFeedbackStars: { type: Number }
   },
   {
     collection: 'Post'

@@ -1,0 +1,42 @@
+{{!-- MJML TEMPLATE, NOT HTML. CANNOT EMAIL DIRECTLY --}}
+<mjml>
+  {{> header}}
+  <mj-body>
+    {{> logo}}
+    <mj-section>
+      <mj-column>
+        <mj-text>Hi {{recipient.name}},</mj-text>
+        <mj-text>{{author.username}} has marked your request as complete!</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text>How was your experience?</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-group>
+        <mj-column>
+          <mj-image src="https://d1ppmvgsdgdlyy.cloudfront.net/email/star.png" href="{{& feedbackLink}}/1" />
+        </mj-column>
+        <mj-column>
+          <mj-image src="https://d1ppmvgsdgdlyy.cloudfront.net/email/star.png" href="{{& feedbackLink}}/2" />
+        </mj-column>
+        <mj-column>
+          <mj-image src="https://d1ppmvgsdgdlyy.cloudfront.net/email/star.png" href="{{& feedbackLink}}/3" />
+        </mj-column>
+        <mj-column>
+          <mj-image src="https://d1ppmvgsdgdlyy.cloudfront.net/email/star.png" href="{{& feedbackLink}}/4" />
+        </mj-column>
+        <mj-column>
+          <mj-image src="https://d1ppmvgsdgdlyy.cloudfront.net/email/star.png" href="{{& feedbackLink}}/5" />
+        </mj-column>
+			</mj-group>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text>If you still haven't received help, please let us know by email at hello@givingtreeproject.org or by phone at <a href="tel:4159644261">415-964-4261</a>.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
