@@ -11,6 +11,7 @@ var io = require(__dirname + '/../../mysockets');
 const sendNotification = require(__dirname + '/../../util/notification');
 const { userWithProfilePic } = require('../../util/user-with-profile-pic');
 const { sendEmail } = require('../../util/send-email');
+const _ = require('lodash');
 
 const getPosts = () => {
   return Post.find().populate('authorId', '-email');
@@ -344,6 +345,27 @@ postRouter.put('/:postId/vote-down', auth, async (req, res) => {
     .catch(err => {
       return res.status(401).send({ error: `Error when downvoting: ${err}` });
     });
+});
+
+postRouter.patch('/:postId', auth, async (req, res) => {
+  const allowedPatchProps = ['cart']; // which props of a Post you can change
+  const user = req.user;
+
+  const post = await Post.findById(req.params.postId);
+  if (!post) {
+    return res.status(400).json({ message: `invalid postId` });
+  }
+
+  if (!user._id.equals(post.authorId)) {
+    return res.status(403).json({ message: `access denied` });
+  }
+
+  const filteredPatchProps = _.pick(req.body, allowedPatchProps);
+  _.assign(post, filteredPatchProps);
+
+  await post.save();
+
+  return res.status(200).json(post);
 });
 
 module.exports = postRouter;
