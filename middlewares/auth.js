@@ -15,6 +15,7 @@ const deleteToken = async expiredToken => {
 };
 
 const auth = async (req, res, next) => {
+  if (!req.header('Authorization')) { return res.status(401).send(); }
   const token = req.header('Authorization').replace('Bearer ', '');
 
   try {
