@@ -160,6 +160,20 @@ postRouter.put('/:postId/complete', auth, async (req, res) => {
 
     sendNotification(postAuthor, req.user, post, 'Complete');
 
+    const claimant = userWithProfilePic(req.user);
+    await sendEmail('request-completed', {
+      recipient: postAuthor,
+      data: {
+        feedbackLink:
+          (process.env.NODE_ENV === 'PRODUCTION'
+            ? 'https://api.givingtreeproject.org'
+            : 'http://localhost:3000') +
+          '/v1/email-feedback/' +
+          post._id,
+        author: claimant
+      }
+    });
+
     return res.status(200).send(post);
   } catch (err) {
     return res.status(401).send({ error: `Error when completing order: ${err}` });
