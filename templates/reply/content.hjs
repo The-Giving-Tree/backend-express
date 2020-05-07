@@ -13,12 +13,7 @@
         <mj-image width="50px" height="50px" padding="0px" border-radius="25px" src="{{& author.profilePictureUrl}}" />
       </mj-column>
       <mj-column width="80%">
-        {{^requestAuthor}}
-        <mj-text>{{author.username}} has commented on your request.</mj-text>
-        {{/requestAuthor}}
-        {{#requestAuthor}}
-        <mj-text>{{author.username}} has commented on {{requestAuthor.username}}'s request.</mj-text>
-        {{/requestAuthor}}
+        <mj-text>{{author.username}} replied to your comment:</mj-text>
       </mj-column>
       
     </mj-section>

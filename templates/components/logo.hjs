@@ -1,0 +1,5 @@
+<mj-section>
+  <mj-column>
+    <mj-image width="200px" src="https://d1ppmvgsdgdlyy.cloudfront.net/email/logo.png"></mj-image>
+  </mj-column>
+</mj-section>

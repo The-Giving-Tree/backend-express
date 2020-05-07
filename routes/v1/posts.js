@@ -9,6 +9,8 @@ const NewsFeed = require(__dirname + '/../../models/newsfeed');
 const Notification = require(__dirname + '/../../models/notification');
 var io = require(__dirname + '/../../mysockets');
 const sendNotification = require(__dirname + '/../../util/notification');
+const { userWithProfilePic } = require('../../util/user-with-profile-pic');
+const { sendEmail } = require('../../util/send-email');
 
 const getPosts = () => {
   return Post.find().populate('authorId', '-email');
@@ -188,6 +190,21 @@ postRouter.put('/:postId/claim', auth, async (req, res) => {
       let postAuthor = await User.findById(post.authorId).exec();
 
       sendNotification(postAuthor, req.user, post, 'Claim');
+
+      const claimant = userWithProfilePic(req.user);
+      await sendEmail('request-claimed', {
+        recipient: postAuthor,
+        data: {
+          ctaText: `View ${claimant.name}'s Profile`,
+          ctaLink:
+            (process.env.NODE_ENV === 'PRODUCTION'
+              ? 'https://www.givingtreeproject.org'
+              : 'http://localhost:3001') +
+            '/user/' +
+            claimant.username,
+          author: claimant
+        }
+      });
 
       return res.status(200).send(post);
     })

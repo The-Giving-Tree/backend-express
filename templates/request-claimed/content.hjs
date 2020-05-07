@@ -4,7 +4,9 @@
   <mj-body>
     {{> logo}}
     <mj-section>
-      <mj-column>
+      <mj-column width="20%">
+      </mj-column>
+      <mj-column width="80%">
         <mj-text padding-bottom="0px">Hi {{recipient.name}},</mj-text>
       </mj-column>
     </mj-section>
@@ -13,19 +15,11 @@
         <mj-image width="50px" height="50px" padding="0px" border-radius="25px" src="{{& author.profilePictureUrl}}" />
       </mj-column>
       <mj-column width="80%">
-        {{^requestAuthor}}
-        <mj-text>{{author.username}} has commented on your request.</mj-text>
-        {{/requestAuthor}}
-        {{#requestAuthor}}
-        <mj-text>{{author.username}} has commented on {{requestAuthor.username}}'s request.</mj-text>
-        {{/requestAuthor}}
+        <mj-text>{{author.username}} has claimed your request and will begin working on it soon.</mj-text>
+        <mj-text>Keep an eye out for direct communication from {{author.username}} by phone, email, or in-app comments, depending on what you stated as your preferred contact method.</mj-text>
       </mj-column>
-      
     </mj-section>
     <mj-section>
-      <mj-column width="60%" border-left="2px solid #FFC525">
-        <mj-text>{{comment.content}}</mj-text>
-      </mj-column>
     </mj-section>
     <mj-section>
       <mj-column>
