@@ -13,6 +13,12 @@ const config = {
     "secret": process.env.OAUTH_GOOGLE_SECRET,
     "scope": ['openid', 'profile', "email"],
     "nonce": true
+  },
+  facebook: {
+    key: '247756179680483',
+    secret: process.env.OAUTH_FACEBOOK_SECRET,
+    scope: ['public_profile', 'email'],
+    profile_url: 'https://graph.facebook.com/me?fields=email,name,first_name,last_name,picture'
   }
 };
 
