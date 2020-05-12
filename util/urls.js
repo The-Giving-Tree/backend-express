@@ -1,11 +1,11 @@
 let FRONTEND_URL, BACKEND_URL;
 
 switch (process.env.NODE_ENV) {
-  case 'production':
+  case 'PRODUCTION':
     FRONTEND_URL = 'https://www.givingtreeproject.org';
     BACKEND_URL = 'https://api.givingtreeproject.org';
     break;
-  case 'staging':
+  case 'SANDBOX':
     FRONTEND_URL = 'https://staging.givingtreeproject.org';
     BACKEND_URL = 'https://api-staging.givingtreeproject.org';
     break;
