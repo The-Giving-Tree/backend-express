@@ -49,7 +49,10 @@ authRouter.get('/handler', async (req, res) => {
     const signup = await handleSignup(response);
 
     // TODO: Implement signup
-    return redirectWithError(res, 'We currently only support oauth for pre-existing users, not new registrations.');
+    return redirectWithError(
+      res,
+      'We currently only support oauth for pre-existing users, not new registrations.'
+    );
   } else {
     // Login
     try {
